@@ -36,6 +36,7 @@ public class Teacher {
     @Column
     private int age;
 
+    @Column(nullable = true)
     @ManyToMany
     @JoinTable(
             name = "teacher_student",

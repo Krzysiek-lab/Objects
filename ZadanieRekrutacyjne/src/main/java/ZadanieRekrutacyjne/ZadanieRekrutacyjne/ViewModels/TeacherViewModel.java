@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -31,5 +32,5 @@ public class TeacherViewModel {
     @Min(19)
     private int age;
 
-    private List<Long> students_ids;
+    private List<Long> students_ids = new ArrayList<>();
 }
