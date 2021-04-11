@@ -21,7 +21,7 @@ import java.util.List;
 public class TeacherViewModel {
     private Long id;
 
-    @Length(min = 2)
+    @Length(min = 2, message = "Name has to be at least 2 characters long")
     private String name;
 
     private String lastName;
@@ -32,7 +32,7 @@ public class TeacherViewModel {
 
     private Subject subject;
 
-    @Min(19)
+    @Min(value = 19, message = "Age has to be minimum 19")
     @Max(100)
     private int age;
 

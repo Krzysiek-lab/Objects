@@ -19,7 +19,7 @@ import java.util.List;
 public class StudentViewModel {
     private Long id;
 
-    @Length(min=2)
+    @Length(min=2, message = "Name has to be at least 2 characters long")
     @NotBlank
     private String name;
 
@@ -31,7 +31,7 @@ public class StudentViewModel {
 
     private Field field;
 
-    @Min(19)
+    @Min(value = 19, message = "Age has to be minimum 19")
     @Max(100)
     private int age;
 

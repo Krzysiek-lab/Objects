@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Students management</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+</head>
+<body>
+    <div class="container m-2">
+        <h1>Students</h1>
+
+        <a th:href="@{/newStudentForm}" class="btn btn-primary btn-sm mb-3">Add Student</a>
+        <table class="table table-striped table-responsive-md">
+            <thead>
+                <tr>
+                    <th th:onclick="getSortedStudents(this)">Name</th>
+                    <th th:onclick="getSortedStudents(this)">Last Name</th>
+                    <th th:onclick="getSortedStudents(this)">Age</th>
+                    <th th:onclick="getSortedStudents(this)">Email</th>
+                    <th th:onclick="getSortedStudents(this)">Field</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="student :${students}">
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.lastName}"></td>
+                    <td th:text="${student.age}"></td>
+                    <td th:text="${student.email}"></td>
+                    <td th:text="${student.field}"></td>
+                    <td>
+                        <a th:href="@{/updateStudentForm/{id}(id=${student.id})}" class="btn btn-primary">Update</a>
+                        <a th:href="@{/deleteStudent/{id}(id=${student.id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script type="application/javascript" th:src="@{/jquery-3.5.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/studentManagement.js}"></script>
+</body>
+</html>

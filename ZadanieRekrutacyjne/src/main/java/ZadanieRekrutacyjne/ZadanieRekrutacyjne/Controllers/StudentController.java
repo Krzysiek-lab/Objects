@@ -19,86 +19,65 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/students")
 public class StudentController {
     private final StudentService studentService;
 
-    @GetMapping("getAll")
-    public String getAllStudents(Model model) {
-        model.addAttribute("students", GetStudentViewModels(studentService.GetAll()));
+    @GetMapping(value = "/")
+    public String viewHomePage(@RequestParam(value = "column") Optional<String> column, Model model) {
+        model.addAttribute("students", GetStudentViewModels(studentService.GetPage(0, 10, column.orElse("id"))));
 
-        return "allStudents";
+        return "index";
     }
 
-    @GetMapping("addOrUpdate")
-    public String addEmpty(Model model, @RequestParam(value = "id") Optional<Long> id) {
-        var student = id.isPresent() ? studentService.Get(id.get()) : new Student();
-        model.addAttribute("newStudent", student);
+    @GetMapping("newStudentForm")
+    public String newStudent(Model model) {
+        var newStudent = new StudentViewModel();
+        model.addAttribute("student", newStudent);
 
-        return "addOrUpdateStudent";
+        return "new_student";
     }
 
-    @PostMapping("addOrUpdate")
-    public String addOrUpdateStudent(@ModelAttribute("newStudent") @Valid StudentViewModel studentViewModel, BindingResult bindingResult) throws Exception {
-        if (!bindingResult.hasErrors()) {
-            if (studentViewModel.getId() != null) {
-                studentService.Update(studentViewModel);
+    @PostMapping("saveStudent")
+    public String saveStudent(@ModelAttribute("student") @Valid StudentViewModel student, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            if (student.getId() == null) {
+                return "new_student";
             } else {
-                studentService.Add(studentViewModel);
+                return "update_student";
             }
-
-            return "redirect:/students/getAll";
         }
 
-        return "addOrUpdateStudent";
+        if (student.getId() == null) {
+            studentService.Add(student);
+        } else {
+            studentService.Update(student);
+        }
+
+        return "redirect:/";
     }
 
-//    @PutMapping("update")
-//    public ResponseEntity<StudentViewModel> updateStudent(@ModelAttribute("updatedTeach") @Valid StudentViewModel studentViewModel, BindingResult bindingResult) {
-//        if (!bindingResult.hasErrors()) {
-//            return ResponseEntity.ok(GetStudentViewModel(studentService.Update(studentViewModel)));
-//        }
-//
-//        return ResponseEntity.badRequest().body(studentViewModel);
-//    }
+    @GetMapping("updateStudentForm/{id}")
+    public String updateStudent(@PathVariable(value = "id") Long id, Model model) {
+        var student = GetStudentViewModel(studentService.Get(id));
+        model.addAttribute("student", student);
 
-    @GetMapping("getTeachersOfStudent/{id}")
-    public String getTeachersOfStudent(@PathVariable Long id, Model model) {
-        var teachersOfStudent = studentService.GetForStudent(id).stream().map(this::getGetNameAndLastNameOfTeacher).collect(Collectors.toList());
-
-        model.addAttribute("teachersOfStudents", teachersOfStudent);
-
-        return "teachersOfStudent";
+        return "update_student";
     }
 
-    private String getGetNameAndLastNameOfTeacher(Teacher t) {
-        return t.getName() + " " + t.getLastName();
-    }
-
-    @GetMapping("delete/{id}")
-    public String deleteStudent(@PathVariable Long id) {
+    @GetMapping("deleteStudent/{id}")
+    public String deleteStudent(@PathVariable(value = "id") Long id) {
         studentService.Delete(id);
 
-        return "redirect:/students/getAll";
+        return "redirect:/";
     }
 
-    @GetMapping("getPageable")
-    public ResponseEntity<List<StudentViewModel>> getPageable(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "0") int pageSize,
-            @RequestParam(defaultValue = "name") String columnName) {
-        return ResponseEntity.ok(GetStudentViewModels(studentService.GetPage(page, pageSize, columnName)));
+
+    @GetMapping("get/{id}")
+    public String getStudent(@PathVariable Long id) {
+        GetStudentViewModel(studentService.Get(id));
+        return "get_student";
     }
 
-    @GetMapping("get")
-    public ResponseEntity<StudentViewModel> getStudent(@RequestParam() Long id) {
-        return ResponseEntity.ok(GetStudentViewModel(studentService.Get(id)));
-    }
-
-    @GetMapping("getByName")
-    public ResponseEntity<List<StudentViewModel>> getStudentByName(@RequestParam() String name) {
-        return ResponseEntity.ok(GetStudentViewModels(studentService.GetByName(name)));
-    }
 
     private List<StudentViewModel> GetStudentViewModels(List<Student> students) {
         var studentViewModels = new ArrayList<StudentViewModel>();
