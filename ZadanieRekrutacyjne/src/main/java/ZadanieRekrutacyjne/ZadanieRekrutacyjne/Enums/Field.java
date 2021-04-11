@@ -4,5 +4,6 @@ public enum Field {
     IT,
     Economy,
     Law,
-    Medicine
+    Medicine,
+    Math
 }

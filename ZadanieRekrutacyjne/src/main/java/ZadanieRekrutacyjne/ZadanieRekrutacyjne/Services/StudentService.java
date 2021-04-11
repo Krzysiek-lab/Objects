@@ -59,8 +59,8 @@ public class StudentService {
         return new ArrayList<>(new HashSet<>(allWithDuplicates));
     }
 
-    public List<Student> GetForTeacher(Long teacherId){
-        return teacherRepository.getOne(teacherId).getStudents();
+    public List<Teacher> GetForStudent(Long studentId) {
+        return studentRepository.getOne(studentId).getTeachers();
     }
 
     public Student Update(StudentViewModel studentViewModel) {

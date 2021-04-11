@@ -1,11 +1,14 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Controllers;
 
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entities.Student;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entities.Teacher;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.TeacherService;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.StudentViewModel;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.TeacherViewModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,34 +24,82 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     @GetMapping("getAll")
-    public ResponseEntity<List<TeacherViewModel>> getAllTeachers() {
-        return ResponseEntity.ok(GetTeacherViewModels(teacherService.GetAll()));
+    public String getAllTeachers(Model model) {
+        model.addAttribute("teachers", GetTeacherViewModels(teacherService.GetAll()));
+
+        return "allStudents";
     }
 
-    @PostMapping("add")
-    public ResponseEntity<TeacherViewModel> addTeacher(@ModelAttribute("newTeacher") @Valid TeacherViewModel teacherViewModel, BindingResult bindingResult) {
+
+    ///////////////////
+//    @PostMapping("add")
+//    public ResponseEntity<TeacherViewModel> addTeacher(@ModelAttribute("newTeacher") @Valid TeacherViewModel teacherViewModel, BindingResult bindingResult) {
+//        if (!bindingResult.hasErrors()) {
+//            return ResponseEntity.ok(GetTeacherViewModel(teacherService.Add(teacherViewModel)));
+//        }
+//
+//        return ResponseEntity.badRequest().body(teacherViewModel);
+//    }
+    ////////////////
+    @PostMapping("addOrUpdate")
+    public String addOrUpdateTeacher(@ModelAttribute("newTeacher") @Valid TeacherViewModel teacherViewModel, BindingResult bindingResult) throws Exception {
         if (!bindingResult.hasErrors()) {
-            return ResponseEntity.ok(GetTeacherViewModel(teacherService.Add(teacherViewModel)));
+            if (teacherViewModel.getId() != null) {
+                teacherService.Update(teacherViewModel);
+            } else {
+                teacherService.Add(teacherViewModel);
+            }
+
+            return "redirect:/teachers/getAll";
         }
 
-        return ResponseEntity.badRequest().body(teacherViewModel);
+        return "addOrUpdateTeacher";
+    }
+    //////////////////
+
+//    @PutMapping("update")
+//    public ResponseEntity<TeacherViewModel> updateTeacher(@ModelAttribute("updatedTeach") @Valid TeacherViewModel teacherViewModel, BindingResult bindingResult) {
+//        if (!bindingResult.hasErrors()) {
+//            return ResponseEntity.ok(GetTeacherViewModel(teacherService.Update(teacherViewModel)));
+//        }
+//
+//        return ResponseEntity.badRequest().body(teacherViewModel);
+//    }
+
+
+
+    ////////////////////////////
+    @GetMapping("getStudentsOfTeacher/{id}")
+    public String getStudentsOfTeacher(@PathVariable Long id, Model model) {
+        var teachersOfStudent = teacherService.GetForTeacher(id).stream().map(this::getGetNameAndLastNameOfStudent).collect(Collectors.toList());
+
+        model.addAttribute("studentsOfTeacher", teachersOfStudent);
+
+        return "studentsOfTeacher";
     }
 
-    @PutMapping("update")
-    public ResponseEntity<TeacherViewModel> updateTeacher(@ModelAttribute("updatedTeach") @Valid TeacherViewModel teacherViewModel, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            return ResponseEntity.ok(GetTeacherViewModel(teacherService.Update(teacherViewModel)));
-        }
-
-        return ResponseEntity.badRequest().body(teacherViewModel);
+    private String getGetNameAndLastNameOfStudent(Student t) {
+        return t.getName() + " " + t.getLastName();
     }
+    //////////////////////
+//    @DeleteMapping("delete")
+//    public ResponseEntity<String> deleteTeacher(@RequestParam() Long id) {
+//        teacherService.Delete(id);
+//
+//        return ResponseEntity.noContent().build();
+//    }
 
-    @DeleteMapping("delete")
-    public ResponseEntity<String> deleteTeacher(@RequestParam() Long id) {
+    ///////////////////////
+
+    @GetMapping("delete/{id}")
+    public String deleteTeacher(@PathVariable Long id) {
         teacherService.Delete(id);
 
-        return ResponseEntity.noContent().build();
+        return "redirect:/teachers/getAll";
     }
+    //////////////////////
+
+
 
     @GetMapping("getPageable")
     public ResponseEntity<List<TeacherViewModel>> getPageable(
@@ -67,6 +118,12 @@ public class TeacherController {
     public ResponseEntity<List<TeacherViewModel>> getTeacherByName(@RequestParam() String name) {
         return ResponseEntity.ok(GetTeacherViewModels(teacherService.GetByName(name)));
     }
+
+
+//    @GetMapping("getForTeacher")
+//    public ResponseEntity<List<TeacherViewModel>> getForTeacher(@ModelAttribute("id") Long teacherId) {
+//        return ResponseEntity.ok(GetTeacherViewModels(teacherService.GetForTeacher(teacherId)));
+//    }
 
     private List<TeacherViewModel> GetTeacherViewModels(List<Teacher> teachers) {
         var teacherViewModels = new ArrayList<TeacherViewModel>();

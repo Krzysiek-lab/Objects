@@ -1,18 +1,16 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services;
 
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entities.Student;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entities.Teacher;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.StudentRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.TeacherRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.TeacherViewModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -61,9 +59,7 @@ public class TeacherService {
         return new ArrayList<>(new HashSet<>(allWithDuplicates));
     }
 
-    public List<Teacher> GetForStudent(Long studentId) {
-        return studentRepository.getOne(studentId).getTeachers();
-    }
+    public List<Student> GetForTeacher(Long teacherId){return teacherRepository.getOne(teacherId).getStudents();}
 
     public Teacher Update(TeacherViewModel teacherViewModel) {
         var teacher = teacherRepository.getOne(teacherViewModel.getId());

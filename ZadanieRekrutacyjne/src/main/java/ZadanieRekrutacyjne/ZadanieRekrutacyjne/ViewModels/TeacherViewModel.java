@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +26,14 @@ public class TeacherViewModel {
 
     private String lastName;
 
-    @Email
+    @Email(message = "email has to be valid")
+    @NotBlank
     private String email;
 
     private Subject subject;
 
     @Min(19)
+    @Max(100)
     private int age;
 
     private List<Long> students_ids = new ArrayList<>();
