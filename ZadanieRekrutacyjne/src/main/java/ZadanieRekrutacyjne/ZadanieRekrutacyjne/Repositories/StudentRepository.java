@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    @Query("select t from Teacher t where t.name = :name")
+    @Query("select s from Student s where s.name = :name")
     public List<Student> GetByName(@Param("name") String name);
 
-    @Query("select t from Teacher t where t.lastName = :lastName")
+    @Query("select s from Student s where s.lastName = :lastName")
     public List<Student> GetByLastName(@Param("lastName") String lastName);
 }

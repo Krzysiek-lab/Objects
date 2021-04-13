@@ -6,6 +6,7 @@ import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.StudentRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.TeacherRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.StudentViewModel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -43,10 +44,9 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public List<Student> GetPage(int page, int pageSize, String columnName) {
-        return studentRepository
-                .findAll(PageRequest.of(page, pageSize, Sort.by(columnName)))
-                .getContent();
+    public Page<Student> GetPage(int page, int pageSize, String columnName, boolean asc) {
+        var sortable = asc ? Sort.by(columnName).ascending() : Sort.by(columnName).descending();
+        return studentRepository.findAll(PageRequest.of(page, pageSize, sortable));
     }
 
     public List<Student> GetByName(String name) {
@@ -65,21 +65,19 @@ public class StudentService {
 
     public Student Update(StudentViewModel studentViewModel) {
         var student = studentRepository.getOne(studentViewModel.getId());
-        var teachers = teacherRepository.findAllById(studentViewModel.getTeachers_ids());
 
         student.setName(studentViewModel.getName());
         student.setLastName(studentViewModel.getLastName());
         student.setAge(studentViewModel.getAge());
         student.setEmail(studentViewModel.getEmail());
         student.setField(studentViewModel.getField());
-        student.setTeachers(teachers);
 
         return studentRepository.save(student);
     }
 
     public void Delete(Long studentId) {
-        var Student = studentRepository.getOne(studentId);
+        var student = studentRepository.getOne(studentId);
 
-        studentRepository.delete(Student);
+        studentRepository.delete(student);
     }
 }

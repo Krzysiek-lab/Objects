@@ -1,0 +1,18 @@
+.filter-input {
+    display: inline-block;
+    height: 32px;
+    padding-top: 0px;
+}
+
+.filter-btn {
+    display: inline-block;
+    color: #fff !important;
+}
+
+.control-buttons {
+    margin-bottom: 15px;
+}
+
+.students-container, .teachers-container {
+    display: inline-block;
+}

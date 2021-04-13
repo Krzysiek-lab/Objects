@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>Students management</title>
+    </head>
+    <body>
+        <div class="container m-2">
+            <h1>Students</h1>
+
+            <div class="control-buttons">
+                <a th:onclick="getPaginatedPage()" class="btn btn-primary btn-sm">↻</a>
+                <a th:href="@{/students/newStudentForm}" class="btn btn-primary btn-sm">Add Student</a>
+                <input type="text" class="filter-input form-control col-2">
+                <a th:onclick="getFiltered()" class="filter-btn btn btn-primary btn-sm">Filter</a>
+            </div>
+            <table border="1" class="table table-striped table-responsive-md">
+                <thead>
+                <tr>
+                    <th th:onclick="getPaginatedPage()">
+                        <span class="glyphicon glyphicon-triangle-top"></span>Name</th>
+                    <th th:onclick="getPaginatedPage()">Last Name</th>
+                    <th th:onclick="getPaginatedPage()">Age</th>
+                    <th th:onclick="getPaginatedPage()">Email</th>
+                    <th th:onclick="getPaginatedPage()">Field</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="student :${students}">
+                    <td th:text="${student.name}"></td>
+                    <td th:text="${student.lastName}"></td>
+                    <td th:text="${student.age}"></td>
+                    <td th:text="${student.email}"></td>
+                    <td th:text="${student.field}"></td>
+                    <td>
+                        <a th:value="${student.id}" th:onclick="showTeachers(this)" class="btn btn-info">Teachers</a>
+                        <a th:href="@{/students/updateStudentForm/{id}(id=${student.id})}" class="btn btn-primary">Update</a>
+                        <a th:value="${student.id}" th:onclick="deleteStudent(this)" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div th:if="${totalPages > 0}" class="pagination" style="float: left; padding: 5px;"
+                 th:each="pageNumber : ${pageNumbers}">
+                <button type="button"
+                        th:onclick="getPaginatedPage()"
+                        th:text=${pageNumber}
+                        th:classappend="${pageNumber==currentPageNumber} ? active"
+                        class="pagination-btn btn btn-primary btn-sm mb-3"></button>
+            </div>
+        </div>
+    </body>
+</html>

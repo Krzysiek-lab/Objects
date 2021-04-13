@@ -5,6 +5,7 @@ import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.TeacherService;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.StudentViewModel;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.TeacherViewModel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,20 +14,23 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("teachers")
 public class TeacherController {
 
     private final TeacherService teacherService;
 
 
-    @GetMapping("/teacher")
+    @GetMapping("")
     public String viewHomePage(Model model) {
         model.addAttribute("teachers", GetTeacherViewModels(teacherService.GetPage(0, 10, "id")));
 
-        return "indexT";
+        return "teachers";
     }
 
     @GetMapping("newTeacherForm")
@@ -69,6 +73,13 @@ public class TeacherController {
         teacherService.Delete(id);
 
         return "redirect:/";
+    }
+
+    @GetMapping("getForStudent")
+    public String getForStudent(@RequestParam(value = "studentId") Long studentId, Model model) {
+        model.addAttribute("teachers", GetTeacherViewModels(teacherService.GetForStudent(studentId)));
+
+        return "teachers";
     }
 
     private List<TeacherViewModel> GetTeacherViewModels(List<Teacher> teachers) {
