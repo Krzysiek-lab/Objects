@@ -6,6 +6,7 @@ import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.StudentRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.TeacherRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.TeacherViewModel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -43,10 +44,9 @@ public class TeacherService {
         return teacherRepository.findAll();
     }
 
-    public List<Teacher> GetPage(int page, int pageSize, String columnName) {
-        return teacherRepository
-                .findAll(PageRequest.of(page, pageSize, Sort.by(columnName)))
-                .getContent();
+    public Page<Teacher> GetPage(int page, int pageSize, String columnName, boolean asc) {
+        var sortable = asc ? Sort.by(columnName).ascending() : Sort.by(columnName).descending();
+        return teacherRepository.findAll(PageRequest.of(page, pageSize, sortable));
     }
 
     public List<Teacher> GetByName(String name) {
@@ -59,18 +59,16 @@ public class TeacherService {
         return new ArrayList<>(new HashSet<>(allWithDuplicates));
     }
 
-    public List<Teacher> GetForStudent(Long studentId){return studentRepository.getOne(studentId).getTeachers();}
+    public List<Student> GetForTeacher(Long teacherId){return teacherRepository.getOne(teacherId).getStudents();}
 
     public Teacher Update(TeacherViewModel teacherViewModel) {
         var teacher = teacherRepository.getOne(teacherViewModel.getId());
-        var students = studentRepository.findAllById(teacherViewModel.getStudents_ids());
 
         teacher.setName(teacherViewModel.getName());
         teacher.setLastName(teacherViewModel.getLastName());
         teacher.setAge(teacherViewModel.getAge());
         teacher.setEmail(teacherViewModel.getEmail());
         teacher.setSubject(teacherViewModel.getSubject());
-        teacher.setStudents(students);
 
         return teacherRepository.save(teacher);
     }

@@ -1,19 +1,34 @@
 $(function(){
-    selectedColumn = "id";
-    currentPage = 1;
-    sortAscending = true;
+    selectedStudentColumn = "id";
+    selectedTeacherColumn = "id";
+    currentStudentPage = 1;
+    currentTeacherPage = 1;
+    sortStudentAscending = true;
+    sortTeacherAscending = true;
 
-    $(document).on("click","th", function() {
-        if(selectedColumn == $(this).text().trim().replace(/ /g,'')){
-            sortAscending = !sortAscending;
+    $(document).on("click",".student-header", function() {
+        if(selectedStudentColumn == $(this).text().trim().replace(/ /g,'')){
+            sortStudentAscending = !sortStudentAscending;
         } else {
-            sortAscending = true;
+            sortStudentAscending = true;
         }
 
-        selectedColumn = $(this).text().trim().replace(/ /g,'');
+        selectedStudentColumn = $(this).text().trim().replace(/ /g,'');
     });
-    $(document).on("click",".pagination-btn", function() {
-        currentPage = $(this).text();
+    $(document).on("click",".teacher-header", function() {
+        if(selectedTeacherColumn == $(this).text().trim().replace(/ /g,'')){
+            sortTeacherAscending = !sortTeacherAscending;
+        } else {
+            sortTeacherAscending = true;
+        }
+
+        selectedTeacherColumn = $(this).text().trim().replace(/ /g,'');
+    });
+    $(document).on("click",".student-pagination-btn", function() {
+        currentStudentPage = $(this).text();
+    });
+    $(document).on("click",".teacher-pagination-btn", function() {
+        currentTeacherPage = $(this).text();
     });
 
     $.get( "http://localhost:8080/students", function( result )
@@ -36,5 +51,15 @@ function showTeachers(element){
     {
         var resultBodyHtml = /<body.*?>([\s\S]*)<\/body>/.exec(result)[1];
         $(document).find(".teachers-container").html(resultBodyHtml);
+    });
+}
+
+function showStudents(element){
+    var teacherId = $(element).attr("value");
+
+    $.get( "http://localhost:8080/students/getForTeacher?teacherId="+teacherId, function( result )
+    {
+        var resultBodyHtml = /<body.*?>([\s\S]*)<\/body>/.exec(result)[1];
+        $(document).find(".students-container").html(resultBodyHtml);
     });
 }

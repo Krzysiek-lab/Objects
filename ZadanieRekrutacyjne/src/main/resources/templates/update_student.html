@@ -45,7 +45,7 @@
                     <div th:each="teacher :${teachers}" style="display:flex;">
                         <label th:text="${teacher.name}" style="flex: 0 0 55%;"></label>
                         <a th:if="${!teacher.assignedToCurrentStudent}" th:value="${teacher.id}" th:onclick="addTeacherToStudent(this)" class="btn btn-info" style="flex:1;">Add</a>
-                        <a th:if="${teacher.assignedToCurrentStudent}" th:value="${teacher.id}" th:onclick="removeTeacherFoStudent(this)" class="btn btn-danger" style="flex:1;">Remove</a>
+                        <a th:if="${teacher.assignedToCurrentStudent}" th:value="${teacher.id}" th:onclick="removeTeacherOfStudent(this)" class="btn btn-danger" style="flex:1;">Remove</a>
                     </div>
                 </div>
             </div>

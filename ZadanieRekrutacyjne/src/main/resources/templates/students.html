@@ -9,20 +9,19 @@
             <h1>Students</h1>
 
             <div class="control-buttons">
-                <a th:onclick="getPaginatedPage()" class="btn btn-primary btn-sm">↻</a>
+                <a th:onclick="getPaginatedPageForStudents()" class="btn btn-primary btn-sm">↻</a>
                 <a th:href="@{/students/newStudentForm}" class="btn btn-primary btn-sm">Add Student</a>
-                <input type="text" class="filter-input form-control col-2">
-                <a th:onclick="getFiltered()" class="filter-btn btn btn-primary btn-sm">Filter</a>
+                <input type="text" class="student-filter-input form-control col-2">
+                <a th:onclick="getFilteredForStudents()" class="student-filter-btn btn btn-primary btn-sm">Filter</a>
             </div>
             <table border="1" class="table table-striped table-responsive-md">
                 <thead>
                 <tr>
-                    <th th:onclick="getPaginatedPage()">
-                        <span class="glyphicon glyphicon-triangle-top"></span>Name</th>
-                    <th th:onclick="getPaginatedPage()">Last Name</th>
-                    <th th:onclick="getPaginatedPage()">Age</th>
-                    <th th:onclick="getPaginatedPage()">Email</th>
-                    <th th:onclick="getPaginatedPage()">Field</th>
+                    <th class="student-header" th:onclick="getPaginatedPageForStudents()">Name</th>
+                    <th class="student-header" th:onclick="getPaginatedPageForStudents()">Last Name</th>
+                    <th class="student-header" th:onclick="getPaginatedPageForStudents()">Age</th>
+                    <th class="student-header" th:onclick="getPaginatedPageForStudents()">Email</th>
+                    <th class="student-header" th:onclick="getPaginatedPageForStudents()">Field</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -44,10 +43,10 @@
             <div th:if="${totalPages > 0}" class="pagination" style="float: left; padding: 5px;"
                  th:each="pageNumber : ${pageNumbers}">
                 <button type="button"
-                        th:onclick="getPaginatedPage()"
+                        th:onclick="getPaginatedPageForStudents()"
                         th:text=${pageNumber}
                         th:classappend="${pageNumber==currentPageNumber} ? active"
-                        class="pagination-btn btn btn-primary btn-sm mb-3"></button>
+                        class="student-pagination-btn btn btn-primary btn-sm mb-3"></button>
             </div>
         </div>
     </body>

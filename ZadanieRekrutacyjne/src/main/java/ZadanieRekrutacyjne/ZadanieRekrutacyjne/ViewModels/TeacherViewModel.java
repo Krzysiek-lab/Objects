@@ -21,13 +21,14 @@ import java.util.List;
 public class TeacherViewModel {
     private Long id;
 
-    @Length(min = 2, message = "Name has to be at least 2 characters long")
+    @Length(min=2, message = "Name has to be at least 2 characters long")
+    @NotBlank(message = "Name cannot be empty")
     private String name;
 
     private String lastName;
 
     @Email(message = "email has to be valid")
-    @NotBlank
+    @NotBlank(message = "Email cannot be empty")
     private String email;
 
     private Subject subject;

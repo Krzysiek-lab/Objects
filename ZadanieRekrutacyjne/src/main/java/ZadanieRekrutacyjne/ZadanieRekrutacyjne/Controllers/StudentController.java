@@ -39,7 +39,7 @@ public class StudentController {
         var currentSortColumn = column.orElse("id");
         var currentDirection = sortAscending.orElse(true);
 
-        var students = studentService.GetPage(currentPage-1, currentPageSize, currentSortColumn, currentDirection);
+        var students = studentService.GetPage(currentPage - 1, currentPageSize, currentSortColumn, currentDirection);
         model.addAttribute("students", GetStudentViewModels(students.getContent()));
 
         int totalPages = students.getTotalPages();
@@ -67,7 +67,7 @@ public class StudentController {
 
     @GetMapping("getFiltered")
     public String getFiltered(@RequestParam(value = "filterValue") String filterValue, Model model) {
-        model.addAttribute("students",GetStudentViewModels(studentService.GetByName(filterValue)));
+        model.addAttribute("students", GetStudentViewModels(studentService.GetByName(filterValue)));
 
         return "students";
     }
@@ -111,6 +111,15 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("getForTeacher")
+    public String getForStudent(@RequestParam(value = "teacherId") Long teacherId, Model model) {
+        var teacherStudents = GetStudentViewModels(teacherService.GetForTeacher(teacherId));
+
+        model.addAttribute("students", teacherStudents);
+
+        return "students";
+    }
+
     @GetMapping("addTeacherToStudent")
     public String addTeacherToStudent(@RequestParam(value = "teacherId") Long teacherId, @RequestParam(value = "studentId") Long studentId, Model model) {
         var student = studentService.Get(studentId);
@@ -128,8 +137,8 @@ public class StudentController {
         return "student_teachers";
     }
 
-    @GetMapping("removeTeacherFoStudent")
-    public String removeTeacherFoStudent(@RequestParam(value = "teacherId") Long teacherId, @RequestParam(value = "studentId") Long studentId, Model model) {
+    @GetMapping("removeTeacherOfStudent")
+    public String removeTeacherOfStudent(@RequestParam(value = "teacherId") Long teacherId, @RequestParam(value = "studentId") Long studentId, Model model) {
         var student = studentService.Get(studentId);
         var teacher = teacherService.Get(teacherId);
 
@@ -187,7 +196,7 @@ public class StudentController {
     private TeacherForStudentViewModel GetTeacherIdsViewModel(Teacher teacher, List<Teacher> studentTeachers) {
         return TeacherForStudentViewModel.builder()
                 .id(teacher.getId())
-                .name(teacher.getName()+" "+teacher.getLastName())
+                .name(teacher.getName() + " " + teacher.getLastName())
                 .assignedToCurrentStudent(studentTeachers.contains(teacher))
                 .build();
     }
