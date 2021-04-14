@@ -14,4 +14,3 @@ public class ZadanieRekrutacyjneApplication {
 		SpringApplication.run(ZadanieRekrutacyjneApplication.class, args);
 	}
 }
-// zadaniae
