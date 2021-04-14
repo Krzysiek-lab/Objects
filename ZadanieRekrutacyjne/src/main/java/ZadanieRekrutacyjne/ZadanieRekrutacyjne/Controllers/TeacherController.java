@@ -74,7 +74,6 @@ public class TeacherController {
     }
 
 
-
     @PostMapping("saveTeacher")
     public String saveTeacher(@ModelAttribute("teacher") @Valid TeacherViewModel teacher, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -115,7 +114,7 @@ public class TeacherController {
     }
 
     @GetMapping("getForStudent")
-    public String getForStudent(@RequestParam(value = "studentId") Long studentId, Model model){
+    public String getForStudent(@RequestParam(value = "studentId") Long studentId, Model model) {
         var studentTeachers = GetTeacherViewModels(studentService.GetForStudent(studentId));
 
         model.addAttribute("teachers", studentTeachers);

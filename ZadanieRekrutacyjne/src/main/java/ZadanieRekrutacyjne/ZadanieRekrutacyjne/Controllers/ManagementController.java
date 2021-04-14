@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class ManagementController {
     @GetMapping(value = "/")
-    public String viewHomePage(){
+    public String viewHomePage() {
         return "index";
     }
 }
