@@ -29,7 +29,7 @@ $(function(){// wykonuje sie automatyczenie po wejsciu na strone z management.js
     });
     $(document).on("click",".student-pagination-btn", function() {
         currentStudentPage = $(this).text();// metoda ze studentManagement.js getPaginatedPageForStudents(),
-        // przypisywanie numerku strony (html students ostatnia linijka)
+        // przypisywanie numerku strony do paginacji ze studentmanagement (html students ostatnia linijka)
     });
     $(document).on("click",".teacher-pagination-btn", function() {
         currentTeacherPage = $(this).text();
