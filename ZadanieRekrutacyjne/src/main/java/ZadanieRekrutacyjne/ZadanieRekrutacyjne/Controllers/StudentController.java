@@ -34,7 +34,7 @@ public class StudentController {
             @RequestParam(value = "column") Optional<String> column,
             @RequestParam(value = "sortAscending") Optional<Boolean> sortAscending,
             Model model) {
-        // jest Optional bo mozna nie podawac tych wartosci ale one i tak sa podane z management.js
+        // jest Optional bo mozna nie podawac tych wartosci ale one i tak sa podane z management.js ale nie wszystkiie
         var currentPage = page.orElse(1);
         var currentPageSize = pageSize.orElse(5);
         var currentSortColumn = column.orElse("id");// z management.js linijka 2
