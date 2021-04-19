@@ -124,6 +124,7 @@ public class StudentController {
 
     @GetMapping("getForTeacher")
     public String getForTeacher(@RequestParam(value = "teacherId") Long teacherId, Model model) {
+        // pokazywanie studentow dla teachera
         var teacherStudents = GetStudentViewModels(teacherService.GetForTeacher(teacherId));
 
         model.addAttribute("students", teacherStudents);
@@ -133,6 +134,7 @@ public class StudentController {
 
     @GetMapping("addTeacherToStudent")
     public String addTeacherToStudent(@RequestParam(value = "teacherId") Long teacherId, @RequestParam(value = "studentId") Long studentId, Model model) {
+        // dodawanie studentow do teachera
         var student = studentService.Get(studentId);
         var teacher = teacherService.Get(teacherId);
 
@@ -150,6 +152,7 @@ public class StudentController {
 
     @GetMapping("removeTeacherOfStudent")
     public String removeTeacherOfStudent(@RequestParam(value = "teacherId") Long teacherId, @RequestParam(value = "studentId") Long studentId, Model model) {
+        // usuwanie studentow od teachera
         var student = studentService.Get(studentId);
         var teacher = teacherService.Get(teacherId);
 
