@@ -27,7 +27,7 @@ public class StudentController {
     private final StudentService studentService;
     private final TeacherService teacherService;
 
-    @GetMapping(value = "")
+    @GetMapping(value = "")// students, teachers,
     public String viewHomePage(
             @RequestParam(value = "page") Optional<Integer> page,
             @RequestParam(value = "pageSize") Optional<Integer> pageSize,
@@ -123,7 +123,7 @@ public class StudentController {
     }
 
     @GetMapping("getForTeacher")
-    public String getForStudent(@RequestParam(value = "teacherId") Long teacherId, Model model) {
+    public String getForTeacher(@RequestParam(value = "teacherId") Long teacherId, Model model) {
         var teacherStudents = GetStudentViewModels(teacherService.GetForTeacher(teacherId));
 
         model.addAttribute("students", teacherStudents);

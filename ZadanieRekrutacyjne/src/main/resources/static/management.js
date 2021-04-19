@@ -28,7 +28,8 @@ $(function(){// wykonuje sie automatyczenie po wejsciu na strone z management.js
         selectedTeacherColumn = $(this).text().trim().replace(/ /g,'');
     });
     $(document).on("click",".student-pagination-btn", function() {
-        currentStudentPage = $(this).text();// metoda ze studentManagement.js getPaginatedPageForStudents()
+        currentStudentPage = $(this).text();// metoda ze studentManagement.js getPaginatedPageForStudents(),
+        // przypisywanie numerku strony (html students ostatnia linijka)
     });
     $(document).on("click",".teacher-pagination-btn", function() {
         currentTeacherPage = $(this).text();
@@ -48,6 +49,9 @@ $(function(){// wykonuje sie automatyczenie po wejsciu na strone z management.js
 })
 
 function showTeachers(element){
+    // zwraca nayczycieli ucznia, pobiera jako parametr element taga z ta metoda czyli Teacher w templatce students
+    // i pobiera z niego atrybut value zapisuje do studentId i wtlacza d metody getForTeacher z contrllera i podminia
+    // tag z klasa teachers-container na wynik tej metody z controlera
     var studentId = $(element).attr("value");
 
     $.get( "http://localhost:8080/teachers/getForStudent?studentId="+studentId, function( result )
