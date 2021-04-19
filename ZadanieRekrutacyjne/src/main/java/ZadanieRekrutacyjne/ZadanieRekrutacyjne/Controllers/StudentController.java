@@ -34,9 +34,10 @@ public class StudentController {
             @RequestParam(value = "column") Optional<String> column,
             @RequestParam(value = "sortAscending") Optional<Boolean> sortAscending,
             Model model) {
+        // jest Optional bo mozna nie podawac tych wartosci ale one i tak sa podane z management.js
         var currentPage = page.orElse(1);
         var currentPageSize = pageSize.orElse(5);
-        var currentSortColumn = column.orElse("id");
+        var currentSortColumn = column.orElse("id");// z management.js linijka 2
         var currentDirection = sortAscending.orElse(true);
 
         var students = studentService.GetPage(currentPage - 1, currentPageSize, currentSortColumn, currentDirection);
@@ -48,6 +49,9 @@ public class StudentController {
         model.addAttribute("currentPageNumber", currentPage);
 
         if (totalPages > 0) {
+            // jesli ilosc stron kest wieksza od 0 to wez wartosc stron od 1 do totalPages zamien je na listę
+            // i dodaj do templatki students gdzie wartos strony jest wylistowana na przycisku i po jego nacisnieciu wywoluje sie metoda
+            // getPaginatedPageForStudents z studentManagment zwracająca do div'a student.container dane z danej strony
             var pageNumbers = IntStream.rangeClosed(1, totalPages)
                     .boxed()
                     .collect(Collectors.toList());
@@ -59,6 +63,7 @@ public class StudentController {
 
     @GetMapping("newStudentForm")
     public String newStudent(Model model) {
+        // trzeba stworzyc z getMappingiem bo innaczej nie pokaze strony z formularzem dodawania nowego studenya
         var newStudent = new StudentViewModel();
         model.addAttribute("student", newStudent);
 
@@ -67,6 +72,8 @@ public class StudentController {
 
     @GetMapping("getFiltered")
     public String getFiltered(@RequestParam(value = "filterValue") String filterValue, Model model) {
+        // metoda pobierjaca wartosc dla filtervalue z funkcji getFilteredForStudents z studentMagement,js
+        // ktora zamienia cialo students-container na wyszukanego teachera
         model.addAttribute("students", GetStudentViewModels(studentService.GetByName(filterValue)));
 
         return "students";
@@ -93,12 +100,15 @@ public class StudentController {
 
     @GetMapping("updateStudentForm/{id}")
     public String updateStudent(@PathVariable(value = "id") Long id, Model model) {
-        var student = studentService.Get(id);
-        var studentViewModel = GetStudentViewModel(student);
-        var studentTeachers = student.getTeachers();
+        var student = studentService.Get(id);// zwracam studenta
+        var studentViewModel = GetStudentViewModel(student);// zamianiam go na viewModel
+        var studentTeachers = student.getTeachers();// zwracam teacherow tego studenta
         var teachers = GetTeacherIdsViewModels(teacherService.GetAll(), studentTeachers);
-
-        model.addAttribute("student", studentViewModel);
+        // budowanie teacheridsviewModels i zwracanie do templatki do obiektu teachers gdzie sprawdzam
+        // czy wartos assigned jest true czy nie i w zaleznosi wywoluke ze studentManagement odpowiedzia metode
+        // jesli metoda GetTeacherIdsViewModels sprawdzajca czy dany teacher jest przypisany do studenta i zamienijaca go na viewModel
+        // jesli jej wynikiem jest ze teaxher jest nie przypisany to po przekazaniu do templatki tego obiektu wykona sie if
+        model.addAttribute("student", studentViewModel);// oddaje do obejktu z templatki studentViewModela z danego Student
         model.addAttribute("teachers", teachers);
 
         return "update_student";
@@ -106,6 +116,7 @@ public class StudentController {
 
     @GetMapping("delete")
     public ResponseEntity<String> deleteStudent(@RequestParam(value = "id") Long id) {
+        // usuwanie studenta
         studentService.Delete(id);
 
         return ResponseEntity.ok().build();
@@ -149,6 +160,7 @@ public class StudentController {
         studentService.Update(GetStudentViewModel(student));
 
         var teachers = GetTeacherIdsViewModels(teacherService.GetAll(), student.getTeachers());
+
         model.addAttribute("teachers", teachers);
 
         return "student_teachers";

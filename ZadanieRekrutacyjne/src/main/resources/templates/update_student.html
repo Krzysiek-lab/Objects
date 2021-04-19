@@ -11,7 +11,7 @@
             <h1>Student management</h1>
             <hr>
             <h2>Update student</h2>
-
+            <!--            // tu do tego student zwracam studenta z metody update z kontrollera a on jest z wylistowania studentow-->
             <div class="update-form-and-teachers-list-container" style="display: flex;">
                 <form action="#" th:action="@{/students/saveStudent}" th:object="${student}" method="POST" style="flex: 0 0 55%;">
                     <input id="studentId" th:value="${student.id}" type="hidden" th:field="*{id}">

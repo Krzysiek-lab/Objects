@@ -37,7 +37,7 @@ public class Teacher {
     private int age;
 
     @Column(nullable = true)
-    @ManyToMany
+    @ManyToMany// relacja student ma wielu nauczycieli nauczyciel ma wiele studentow, druga strona jest w encji Teacher
     @JoinTable(
             name = "teacher_student",
             joinColumns = {@JoinColumn(name = "TEACHER_ID", referencedColumnName = "id")},

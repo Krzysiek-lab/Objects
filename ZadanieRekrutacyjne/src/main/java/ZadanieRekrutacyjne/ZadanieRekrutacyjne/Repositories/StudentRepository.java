@@ -10,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
+    // połaczenie do bazy danych z tabelą Student z Id typu Long
+
+    // zapytania do szukania danego Studenta w kolumnach name i lastName
     @Query("select s from Student s where s.name = :name")
     public List<Student> GetByName(@Param("name") String name);
 

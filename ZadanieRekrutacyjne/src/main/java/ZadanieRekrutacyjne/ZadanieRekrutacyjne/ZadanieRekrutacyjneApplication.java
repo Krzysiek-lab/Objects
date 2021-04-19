@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan("ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entities")
-@EnableJpaRepositories("ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories")
+@EntityScan("ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entities")// skanowanie encji w wskazanej paczce
+@EnableJpaRepositories("ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories")// skanowanie repozytoriow w wskazanej paczce
 public class ZadanieRekrutacyjneApplication {
 
 	public static void main(String[] args) {

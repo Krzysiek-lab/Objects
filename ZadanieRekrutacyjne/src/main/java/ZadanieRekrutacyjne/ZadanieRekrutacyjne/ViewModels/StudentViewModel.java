@@ -19,6 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class StudentViewModel {
+    //walidacje dla pól z informacjami w templatkach o ewntualnych błędach
+
     private Long id;
 
     @Length(min=2, message = "Name has to be at least 2 characters long")

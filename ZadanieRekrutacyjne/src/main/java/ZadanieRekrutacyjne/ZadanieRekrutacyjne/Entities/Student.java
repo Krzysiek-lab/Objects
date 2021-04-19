@@ -37,7 +37,7 @@ public class Student {
 
     @Column(nullable = true)
     @ManyToMany
-    @JoinTable(
+    @JoinTable(// relacja student ma wielu nauczycieli nauczyciel ma wiele studentow, druga strona jest w encji Student
             name = "teacher_student",
             joinColumns = {@JoinColumn(name = "STUDENT_ID", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "TEACHER_ID", referencedColumnName = "id")})
