@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>End Value</title>
+    <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+</head>
+<body>
+<table class="table table-bordered">
+    <tr class="table-striped">
+        <th>Type of event</th>
+        <th>Power drop</th>
+        <th>Starting date</th>
+        <th>End date</th>
+    </tr>
+    <th:block th:each="single: ${plant}">
+        <tr>
+            <td th:text="${single.typeOfEvent}"></td>
+            <td th:text="${single.powerDrop}"></td>
+            <td th:text="${single.startDate}"></td>
+            <td th:text="${single.endDate}"></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

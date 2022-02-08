@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <br/>
+    <div id="addPersonDiv">
+        <form class="form-horizontal" method="post" th:href="@{~/registration}" th:object="${user}">
+            <input th:value="${user.id}" type="hidden" th:field="*{id}">
+            <fieldset>
+                <div id="legend">
+                    <legend class="">Add new user</legend>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="firstName">First name</label>
+                    <div class="controls">
+                        <input type="text" id="firstName" name="firstName" placeholder="" class="input-xlarge"
+                               th:field="*{firstName}">
+                        <p class="help-block">First name can contain any letters without spaces</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="lastName">Last name</label>
+                    <div class="controls">
+                        <input type="text" id="lastName" name="lastName" placeholder="" class="input-xlarge"
+                               th:field="*{lastName}">
+                        <p class="help-block">Please provide your last name</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="login">login</label>
+                    <div class="controls">
+                        <input type="text" id="login" name="login" placeholder="" class="input-xlarge"
+                               th:field="*{login}">
+                        <p class="help-block">Login should be at least 4 characters</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="password">password</label>
+                    <div class="controls">
+                        <input type="password" id="password" name="password" placeholder="" class="input-xlarge"
+                               th:field="*{password}">
+                        <p class="help-block">password should be at least 6 characters</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+</body>
+</html>

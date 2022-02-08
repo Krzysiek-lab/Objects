@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>New event</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <h1>Save</h1>
+    <hr>
+    <h2>Save event</h2>
+
+    <form action="#" th:action="@{saveEvent}" th:object="${event}" method="POST">
+        <div th:if="${#fields.hasErrors('typeOfEvent')}" th:errors="*{typeOfEvent}">Invalid type of event</div>
+        <input type="text" th:field="*{typeOfEvent}" placeholder="Type of event" class="form-control mb-4 col-4">
+
+        <div th:if="${#fields.hasErrors('powerDrop')}" th:errors="*{powerDrop}">Invalid power drop</div>
+        <input type="text" th:field="*{powerDrop}" placeholder="power drop" class="form-control mb-4 col-4">
+
+        <div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Invalid start date</div>
+        <input type="text" th:field="*{startDate}" placeholder="start date" class="form-control mb-4 col-4">
+
+        <div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Invalid end date</div>
+        <input type="text" th:field="*{endDate}" placeholder="end date" class="form-control mb-4 col-4">
+
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+    </form>
+    <hr>
+</div>
+</body>
+</html>
