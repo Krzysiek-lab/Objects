@@ -28,7 +28,7 @@ public class UserService {
         List<Role> roles = userViewModel.getRoles();
         if (roles == null) {
             Role role = new Role();
-            role.setType(RoleType.WORKER);
+            role.setType(RoleType.ADMIN);// pomyslec nad tym
             roleRepository.save(role);
             roles = Collections.singletonList(role);
         }

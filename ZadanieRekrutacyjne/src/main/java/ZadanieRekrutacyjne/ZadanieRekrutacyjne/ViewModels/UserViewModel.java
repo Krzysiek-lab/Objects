@@ -35,7 +35,7 @@ public class UserViewModel implements Serializable {
     @Size(min = 6, message = "password must be at least 6 characters long")
     private String password;
 
-    @NotEmpty
+
     private List<Role> roles;
 
 }

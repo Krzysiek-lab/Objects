@@ -11,13 +11,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="Role")
+@Table(name = "Role")
 public class Role {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "role_id", nullable = false)
     private Long id;
 
     @Column(name = "typ_roli")
@@ -27,6 +27,6 @@ public class Role {
 
     @Override
     public String toString() {
-        return "" + type ;
+        return "" + type;
     }
 }

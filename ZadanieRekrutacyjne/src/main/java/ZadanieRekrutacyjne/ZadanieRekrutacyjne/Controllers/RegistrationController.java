@@ -29,7 +29,7 @@ public class RegistrationController {
     }
 
 
-    @GetMapping("/registrationForm")
+    @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("user", new UserViewModel());
         return "registration-form";
@@ -37,22 +37,22 @@ public class RegistrationController {
 
 
     @PostMapping("/registration")
-    public String registrationAdding(@ModelAttribute("user") @Valid UserViewModel user2,
-                                     BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            if (user2.getId() == null) {
-                userService.add(user2);
-            } else {
-                userService.update(user2);
-            }
-        } else {
+    public String registrationUsersAdding(@ModelAttribute("user") @Valid UserViewModel user2,
+                                          BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             if (user2.getId() == null) {
                 return "registration-form";
             } else {
                 return "registration-formUpdate";
             }
+        } else {
+            if (user2.getId() == null) {
+                userService.add(user2);
+            } else {
+                userService.update(user2);
+            }
         }
-        return "redirect:/allUsers";
+        return "redirect:/login";
     }
 
 
@@ -64,7 +64,6 @@ public class RegistrationController {
     }
 
 
-    @Secured("ROLE_ADMIN")
     @PostMapping("allUsers")
     public String findAll(Model model) {
         model.addAttribute("users", userRepository.findAll());
