@@ -73,7 +73,7 @@ public class EventsController {
 
     @GetMapping("events")
     public String findAll(Model model) {
-        model.addAttribute("plant", eventRepository.findAll());
+        model.addAttribute("event", eventRepository.findAll());
         return "allEvents";
     }
 

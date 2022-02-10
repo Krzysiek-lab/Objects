@@ -11,7 +11,7 @@
     <hr>
     <h2>Update powerPlant</h2>
 
-    <form action="#" th:href="@{~/savePowerPlant}" th:object="${plant}" method="POST">
+    <form action="#" th:action="@{~/savePowerPlant}" th:object="${plant}" method="POST">
         <input th:value="${plant.id}" type="hidden" th:field="*{id}">
         <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid Name</div>
         <input type="text" th:field="*{name}" placeholder="Name" class="form-control mb-4 col-4">

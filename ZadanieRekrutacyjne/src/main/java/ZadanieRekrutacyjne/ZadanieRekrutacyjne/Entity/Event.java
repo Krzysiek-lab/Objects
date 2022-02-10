@@ -41,9 +41,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event{" +
-                "typeOfEvent='" + typeOfEvent + '\'' +
-                '}';
+        return "" + typeOfEvent + "";
     }
 
     @Override

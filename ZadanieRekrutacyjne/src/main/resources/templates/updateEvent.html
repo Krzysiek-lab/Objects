@@ -11,7 +11,7 @@
     <hr>
     <h2>Update event</h2>
 
-    <form action="#" th:href="@{~/saveEvent}" th:object="${event}" method="POST">
+    <form action="#" th:action="@{~/saveEvent}" th:object="${event}" method="POST">
         <input th:value="${event.id}" type="hidden" th:field="*{id}">
 
         <div th:if="${#fields.hasErrors('typeOfEvent')}" th:errors="*{typeOfEvent}">Invalid type of event</div>

@@ -50,6 +50,7 @@ public class PlantService implements powerForPowerPlant, AddUpdateGetPlant, Plan
                 .id(powerPlant.getId())
                 .name(powerPlant.getName())
                 .power(powerPlant.getPower())
+                .listOfEventsForPlant(powerPlant.getEvents())
                 .build();
 
     }
