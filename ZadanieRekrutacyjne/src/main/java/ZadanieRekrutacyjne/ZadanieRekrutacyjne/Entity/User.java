@@ -39,4 +39,5 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roles;
 
+
 }

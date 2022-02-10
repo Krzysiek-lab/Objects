@@ -11,6 +11,7 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -21,8 +22,6 @@ public class EventViewModel {
 
     Integer id;
 
-    @NotEmpty(message = "name can not be empty")
-    String plantName;
 
     @NotEmpty(message = "power can not be empty")
     String typeOfEvent;
@@ -32,10 +31,10 @@ public class EventViewModel {
     Double powerDrop;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    Date startDate;
+    LocalDate startDate;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    Date endDate;
+    LocalDate endDate;
 
     PowerPlant PlantsForEvent;
 }

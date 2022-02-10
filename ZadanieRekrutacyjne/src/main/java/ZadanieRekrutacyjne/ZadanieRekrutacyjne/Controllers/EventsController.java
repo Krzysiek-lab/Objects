@@ -1,6 +1,5 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Controllers;
 
-import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.PowerPlant;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.EventRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.PowerPlantRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.EventService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -72,10 +70,11 @@ public class EventsController {
         return "updateEvent";
     }
 
-    @ResponseBody
+
     @GetMapping("events")
-    public List<PowerPlant> findAll() {
-        return powerPlantRepository.findAll();
+    public String findAll(Model model) {
+        model.addAttribute("plant", eventRepository.findAll());
+        return "allEvents";
     }
 
 

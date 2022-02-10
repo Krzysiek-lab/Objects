@@ -23,10 +23,10 @@ public class Security extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/allUsers").permitAll()
-                .antMatchers("/users/delete/{id}").access("hasRole('ROLE_ADMIN')")//albo /users/delete* przy @RequestParam
-                .antMatchers("/users/update/{id}").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/delete/powerPlants/{id}").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/addEventToPlant/{plantId}/{eventId}").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/users/delete/{id}").access("hasAuthority('ADMIN')")//albo /users/delete* przy @RequestParam
+                .antMatchers("/users/update/{id}").access("hasAuthority('ADMIN')")
+                .antMatchers("/delete/powerPlants/{id}").access("hasAuthority('ADMIN')")
+                .antMatchers("/addEventToPlant/{plantId}/{eventId}").access("hasAuthority('ADMIN')")
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/regist*").permitAll()
                 .anyRequest().authenticated();

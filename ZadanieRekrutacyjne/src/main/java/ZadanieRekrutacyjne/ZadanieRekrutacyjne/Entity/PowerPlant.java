@@ -1,20 +1,21 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Entity
 @Table(name = "elektrownie")
 @NoArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
+@ToString
 public class PowerPlant {
 
 
@@ -30,7 +31,19 @@ public class PowerPlant {
     public Double power;
 
     @OneToMany(mappedBy = "powerPlant")
+    @ToString.Exclude
     private List<Event> events;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        PowerPlant that = (PowerPlant) o;
+        return id != null && Objects.equals(id, that.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

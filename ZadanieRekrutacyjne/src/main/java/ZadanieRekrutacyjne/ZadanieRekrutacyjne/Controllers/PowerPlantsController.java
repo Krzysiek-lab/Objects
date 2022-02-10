@@ -1,6 +1,5 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Controllers;
 
-import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.PowerPlant;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.EventRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.PowerPlantRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.EventService;
@@ -15,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -67,17 +65,16 @@ public class PowerPlantsController {
     }
 
 
-    @ResponseBody
     @GetMapping("powerPlants")
-    public List<PowerPlant> findAll() {
-        return powerPlantRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+    public String findAll(Model model) {
+        model.addAttribute("plant", powerPlantRepository.findAll(Sort.by(Sort.Direction.ASC, "name")));
+        return "allPlants";
     }
 
 
     @GetMapping("powerPlants/{id}")
     public String findById(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("plant", powerPlantRepository.getOne(id));
-
         return "plant";
     }
 
@@ -106,6 +103,8 @@ public class PowerPlantsController {
             var pl = powerPlantRepository.getOne(Math.toIntExact(plantId));
             var ev = eventRepository.getOne(Math.toIntExact(eventId));
 
+
+            ev.setPowerPlant(pl);
             var eventsForPlant = pl.getEvents();
             eventsForPlant.add(ev);
             pl.setEvents(eventsForPlant);

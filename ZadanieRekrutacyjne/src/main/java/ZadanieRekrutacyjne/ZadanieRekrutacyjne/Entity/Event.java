@@ -1,19 +1,20 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Table(name = "zdarzenia")
 @Entity
 @Builder
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+
 public class Event {
 
     @Id
@@ -32,9 +33,29 @@ public class Event {
     public Double powerDrop;
 
     @Column
-    public Date startDate;
+    public LocalDate startDate;
 
     @Column
-    public Date endDate;
+    public LocalDate endDate;
 
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "typeOfEvent='" + typeOfEvent + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Event event = (Event) o;
+        return id != null && Objects.equals(id, event.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

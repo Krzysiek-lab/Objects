@@ -2,9 +2,9 @@ package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services;
 
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.Event;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.PowerPlant;
-import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.AddPlant;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.AddUpdateGetEvent;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.EventServiceToViewModel;
-import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.NumberOfFailureEventsForId;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.NumberOfFailureEvents;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.EventRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.PowerPlantRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.EventViewModel;
@@ -14,7 +14,7 @@ import java.util.Collection;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
-public class EventService implements NumberOfFailureEventsForId, AddPlant, EventServiceToViewModel {
+public class EventService implements NumberOfFailureEvents, EventServiceToViewModel, AddUpdateGetEvent {
 
 
     private final PowerPlantRepository powerPlantRepository;

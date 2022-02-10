@@ -2,9 +2,9 @@ package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services;
 
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.Event;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.PowerPlant;
-import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.Add;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.AddUpdateGetPlant;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.PlantServiceToViewModel;
-import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.powerForPowerPlantPerDay;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.powerForPowerPlant;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.EventRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.PowerPlantRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.PlantViewModel;
@@ -15,7 +15,7 @@ import java.util.*;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
-public class PlantService implements powerForPowerPlantPerDay, Add, PlantServiceToViewModel {
+public class PlantService implements powerForPowerPlant, AddUpdateGetPlant, PlantServiceToViewModel {
 
 
     private final EventRepository eventRepository;

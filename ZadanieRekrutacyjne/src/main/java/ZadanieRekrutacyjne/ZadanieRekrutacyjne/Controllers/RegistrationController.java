@@ -57,14 +57,14 @@ public class RegistrationController {
 
 
     @Secured("ROLE_ADMIN")
-    @PostMapping("users/update/{id}")
+    @GetMapping("users/update/{id}")
     public String updateUser(@PathVariable(value = "id") Long id, Model model) {
         model.addAttribute("user", userRepository.getOne(id));
         return "registration-formUpdate";
     }
 
 
-    @PostMapping("allUsers")
+    @GetMapping("allUsers")
     public String findAll(Model model) {
         model.addAttribute("users", userRepository.findAll());
         return "allUsers";
@@ -72,9 +72,9 @@ public class RegistrationController {
 
 
     @Secured("ROLE_ADMIN")
-    @PostMapping("users/delete/{id}")
+    @GetMapping("users/delete/{id}")
     public String deleteUser(@PathVariable(value = "id") Long id) {
         userService.delete(id);
-        return "registration-form";
+        return "redirect:/allUsers";
     }
 }

@@ -3,6 +3,7 @@ package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.Role;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.User;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Enums.RoleType;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.AddUpdateGetDeleteUser;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.RoleRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.UserRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.UserViewModel;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements AddUpdateGetDeleteUser {
 
 
     private final UserRepository userRepository;
@@ -24,7 +25,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public Long add(UserViewModel userViewModel) {
+    public void add(UserViewModel userViewModel) {
         List<Role> roles = userViewModel.getRoles();
         if (roles == null) {
             Role role = new Role();
@@ -41,7 +42,6 @@ public class UserService {
                 .roles(roles)
                 .build();
         userRepository.save(user1);
-        return user1.getId();
     }
 
 
