@@ -13,6 +13,7 @@
         <th>Power drop</th>
         <th>Starting date</th>
         <th>End date</th>
+        <th>Actions</th>
     </tr>
     <th:block th:each="single: ${event}">
         <tr>
@@ -20,6 +21,10 @@
             <td th:text="${single.powerDrop}"></td>
             <td th:text="${single.startDate}"></td>
             <td th:text="${single.endDate}"></td>
+            <td>
+                <a th:href="@{/updateEvent/{id}(id=${single.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/delete/event/{id}(id=${single.id})}" class="btn btn-danger">Delete</a>
+            </td>
         </tr>
     </th:block>
 </table>

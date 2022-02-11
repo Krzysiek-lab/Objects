@@ -4,6 +4,7 @@ import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.EventRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.PowerPlantRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.EventService;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.PlantService;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.UserService;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.PlantViewModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -24,6 +25,7 @@ public class PowerPlantsController {
     private final EventRepository eventRepository;
     private final PlantService plantService;
     private final EventService eventService;
+    private final UserService userService;
 
 
     @GetMapping("form")
@@ -68,6 +70,7 @@ public class PowerPlantsController {
     @GetMapping("powerPlants")
     public String findAll(Model model) {
         model.addAttribute("plant", powerPlantRepository.findAll(Sort.by(Sort.Direction.ASC, "name")));
+        model.addAttribute("user",userService.getCurrentUser());
         return "allPlants";
     }
 

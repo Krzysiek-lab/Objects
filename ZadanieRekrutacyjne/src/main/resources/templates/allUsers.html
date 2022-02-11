@@ -14,6 +14,7 @@
         <th>Login</th>
         <th>Password</th>
         <th>Roles</th>
+        <th>Actions</th>
     </tr>
     <th:block th:each="user: ${users}">
         <tr>
@@ -22,6 +23,10 @@
             <td th:text="${user.login}"></td>
             <td th:text="${user.password}"></td>
             <td th:text="${user.roles}"></td>
+            <td>
+                <a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Delete</a>
+            </td>
         </tr>
     </th:block>
 </table>

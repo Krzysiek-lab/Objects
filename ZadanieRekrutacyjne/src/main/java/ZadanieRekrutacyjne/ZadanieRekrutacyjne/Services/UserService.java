@@ -8,12 +8,16 @@ import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.RoleRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.UserRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.UserViewModel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @RequiredArgsConstructor
@@ -62,5 +66,24 @@ public class UserService implements AddUpdateGetDeleteUser {
     public void delete(Long userId) {
         userRepository.deleteById(userId);
     }
+
+
+
+    public User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        List<User> users = userRepository.findAll();
+        return findCurrentUser(name, users);
+    }
+
+    public User findCurrentUser(String name, List<User> users) {
+        List<User> currentUser = new ArrayList<>();
+        users.stream()
+                .filter(e -> e.getLogin().equals(name))
+                .forEach(currentUser::add);
+
+        return currentUser.get(0);
+    }
+
 }
 

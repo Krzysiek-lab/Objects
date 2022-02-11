@@ -86,8 +86,8 @@ public class EventsController {
     }
 
 
-    @DeleteMapping("delete/event")
-    public String deleteById(@RequestParam(value = "id") Integer id) {
+    @DeleteMapping("delete/event/{id}")
+    public String deleteById(@PathVariable(value = "id") Integer id) {
         eventRepository.deleteById(id);
         return "redirect:/events";
     }
