@@ -1,9 +1,11 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces;
 
-import java.sql.Timestamp;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Enums.EventType;
+
+import java.time.LocalDate;
 import java.util.Map;
 
 public interface powerForPowerPlant {
 
-    Map<Integer, String> powerForPowerPlantPerDay(Timestamp date);
+    Map<Integer, EventType> powerForPowerPlantPerDay(LocalDate date);
 }

@@ -2,6 +2,7 @@ package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services;
 
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.Event;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.PowerPlant;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Enums.EventType;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.AddUpdateGetEvent;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.EventServiceToViewModel;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.NumberOfFailureEvents;
@@ -28,7 +29,7 @@ public class EventService implements NumberOfFailureEvents, EventServiceToViewMo
 
         return plant.map(value -> value.getEvents()
                 .stream()
-                .filter(z -> z.typeOfEvent.equals("AWARIA"))
+                .filter(z -> z.typeOfEvent.equals(EventType.AWARIA))
                 .count()).orElse(0L);
     }
 

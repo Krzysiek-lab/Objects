@@ -2,6 +2,7 @@ package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services;
 
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.Event;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.PowerPlant;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Enums.EventType;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.AddUpdateGetPlant;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.PlantServiceToViewModel;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Interfaces.powerForPowerPlant;
@@ -10,7 +11,7 @@ import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.PowerPlantRepository
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.PlantViewModel;
 import lombok.RequiredArgsConstructor;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.*;
 
 @org.springframework.stereotype.Service
@@ -21,9 +22,9 @@ public class PlantService implements powerForPowerPlant, AddUpdateGetPlant, Plan
     private final EventRepository eventRepository;
     private final PowerPlantRepository powerPlantRepository;
 
-    public Map<Integer, String> powerForPowerPlantPerDay(Timestamp date) {
+    public Map<Integer, EventType> powerForPowerPlantPerDay(LocalDate date) {
         List<Event> list = new ArrayList<>(getAllEvents());
-        Map<Integer, String> map = new HashMap<>();
+        Map<Integer, EventType> map = new HashMap<>();
         list.stream()
                 .filter(e -> e.startDate.equals(date))
                 .forEach(e -> map.put(e.id, e.typeOfEvent));

@@ -1,5 +1,6 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity;
 
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Enums.EventType;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -27,7 +28,8 @@ public class Event {
     private PowerPlant powerPlant;
 
     @Column
-    public String typeOfEvent;
+    @Enumerated(EnumType.STRING)
+    public EventType typeOfEvent;
 
     @Column
     public Double powerDrop;

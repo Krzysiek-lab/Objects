@@ -1,6 +1,7 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels;
 
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.PowerPlant;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Enums.EventType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,8 +24,7 @@ public class EventViewModel {
     Integer id;
 
 
-    @NotEmpty(message = "power can not be empty")
-    String typeOfEvent;
+    EventType typeOfEvent;
 
     @NotNull(message = "power can not be empty")
     @DecimalMax("10000.0") @DecimalMin("0.0")

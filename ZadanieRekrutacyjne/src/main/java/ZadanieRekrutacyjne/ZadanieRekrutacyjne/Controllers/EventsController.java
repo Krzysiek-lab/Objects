@@ -1,7 +1,7 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Controllers;
 
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Enums.EventType;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.EventRepository;
-import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.PowerPlantRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.EventService;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.PlantService;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.EventViewModel;
@@ -12,28 +12,27 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 public class EventsController {
 
-    private final PowerPlantRepository powerPlantRepository;
     private final PlantService PlantService;
     private final EventService eventService;
     private final EventRepository eventRepository;
 
 
     @ResponseBody
-    @GetMapping("events/{date}")
-    public Map<Integer, String> findByDate(@PathVariable("date") String date) {
+    @GetMapping("events/findBy/{date}")
+    public Map<Integer, EventType> findByDate(@PathVariable("date") String date) {
         var dates = getDate(date);
         return PlantService.powerForPowerPlantPerDay(dates);
     }
 
-    private Timestamp getDate(String date) {
-        return Timestamp.valueOf(date);
+    private LocalDate getDate(String date) {
+        return LocalDate.parse(date);
     }
 
 
@@ -81,7 +80,6 @@ public class EventsController {
     @GetMapping("events/{id}")
     public String findById(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("event", eventRepository.getOne(id));
-
         return "event";
     }
 

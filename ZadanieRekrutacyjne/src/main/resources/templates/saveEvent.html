@@ -13,17 +13,24 @@
     <h2>Save event</h2>
 
     <form action="#" th:action="@{saveEvent}" th:object="${event}" method="POST">
-        <div th:if="${#fields.hasErrors('typeOfEvent')}" th:errors="*{typeOfEvent}">Invalid type of event</div>
-        <input type="text" th:field="*{typeOfEvent}" placeholder="Type of event" class="form-control mb-4 col-4">
 
+        <div class="control-group">
+            <label class="control-label">Event type</label>
+            <select th:field="*{typeOfEvent}">
+                <option th:each="i : ${T(ZadanieRekrutacyjne.ZadanieRekrutacyjne.Enums.EventType).values()}"
+                        th:value="${i}"
+                        th:text="${i}"></option>
+            </select>
+        </div>
+        Power drop
         <div th:if="${#fields.hasErrors('powerDrop')}" th:errors="*{powerDrop}">Invalid power drop</div>
         <input type="text" th:field="*{powerDrop}" placeholder="power drop" class="form-control mb-4 col-4">
-
+        Start date
         <div th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Invalid start date</div>
-        <input type="text" th:field="*{startDate}" placeholder="start date" class="form-control mb-4 col-4">
-
+        <input type="text" th:field="*{startDate}" placeholder="YYYY-MM-DD" class="form-control mb-4 col-4">
+        End date
         <div th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Invalid end date</div>
-        <input type="text" th:field="*{endDate}" placeholder="end date" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{endDate}" placeholder="YYYY-MM-DD" class="form-control mb-4 col-4">
 
 
         <button type="submit" class="btn btn-info col-2">Save</button>

@@ -70,8 +70,16 @@ public class PowerPlantsController {
     @GetMapping("powerPlants")
     public String findAll(Model model) {
         model.addAttribute("plant", powerPlantRepository.findAll(Sort.by(Sort.Direction.ASC, "name")));
-        model.addAttribute("user",userService.getCurrentUser());
+        model.addAttribute("user", userService.getCurrentUser());
         return "allPlants";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("powerPlantsIds")
+    public String findAllIds(Model model) {
+        model.addAttribute("plantId", powerPlantRepository.findAll());
+        model.addAttribute("eventId", eventRepository.findAll());
+        return "allPlantsId";
     }
 
 

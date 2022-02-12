@@ -27,6 +27,7 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/update/{id}").access("hasAuthority('ADMIN')")
                 .antMatchers("/delete/powerPlants/{id}").access("hasAuthority('ADMIN')")
                 .antMatchers("/addEventToPlant/{plantId}/{eventId}").access("hasAuthority('ADMIN')")
+                .antMatchers("/powerPlantsIds").access("hasAuthority('ADMIN')")
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/regist*").permitAll()
                 .anyRequest().authenticated();

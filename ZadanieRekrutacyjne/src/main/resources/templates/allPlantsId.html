@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>For adding event to plant by id</title>
+    <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+</head>
+<body>
+<table class="table table-bordered">
+    <tr class="table-striped">
+        <th>Plant Id</th>
+        <th>Actions</th>
+    </tr>
+    <th:block th:each="single: ${plantId}">
+        <tr>
+            <td th:text="${single.id}"></td>
+            <td>
+                <a th:href="@{/powerPlants/{id}(id=${single.id})}" class="btn btn-primary">Find by plant id</a>
+            </td>
+        </tr>
+    </th:block>
+    <tr class="table-striped">
+        <th>Event Id</th>
+        <th>Actions</th>
+    </tr>
+    <th:block th:each="singles: ${eventId}">
+        <tr>
+            <td th:text="${singles.id}"></td>
+            <td>
+                <a th:href="@{/events/{id}(id=${singles.id})}" class="btn btn-primary">Find by event id</a>
+            </td>
+        <tr></tr>
+    </th:block>
+</table>
+Provide plant id
+<br>
+<input id="vall" type="text" class="form-control col-2">
+<br>
+Provide event id
+<input id="vall2" type="text" class="form-control col-2"><br>
+<button onclick="myFunction()" class="btn btn-primary">Add</button>
+<br>
+<br>
+<td>
+    <a th:href="@{form}" class="btn btn-primary">Back to plant form site</a>
+    <a th:href="@{eventForm}" class="btn btn-primary">Back to event form site</a>
+    <a th:href="@{events}" class="btn btn-primary">All events</a>
+    <a th:href="@{powerPlants}" class="btn btn-primary">All power plants</a>
+    <a th:href="@{logout}" class="btn btn-primary">Logout</a>
+</td>
+
+<script>
+function myFunction() {
+  var intt = document.getElementById("vall").value;
+  var intt2 = document.getElementById("vall2").value;
+location.href = 'http://localhost:8080/addEventToPlant/'+intt+'/'+intt2;
+}
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</html>
