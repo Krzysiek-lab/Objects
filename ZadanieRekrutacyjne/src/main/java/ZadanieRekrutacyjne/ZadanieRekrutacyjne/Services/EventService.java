@@ -10,10 +10,11 @@ import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.EventRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.PowerPlantRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.EventViewModel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
-@org.springframework.stereotype.Service
+@Service
 @RequiredArgsConstructor
 public class EventService implements NumberOfFailureEvents, EventServiceToViewModel, AddUpdateGetEvent {
 

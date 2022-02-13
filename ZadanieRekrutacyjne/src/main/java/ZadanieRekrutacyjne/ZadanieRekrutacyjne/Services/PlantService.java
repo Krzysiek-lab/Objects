@@ -10,11 +10,12 @@ import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.EventRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.PowerPlantRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.PlantViewModel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
 
-@org.springframework.stereotype.Service
+@Service
 @RequiredArgsConstructor
 public class PlantService implements powerForPowerPlant, AddUpdateGetPlant, PlantServiceToViewModel {
 
@@ -65,4 +66,5 @@ public class PlantService implements powerForPowerPlant, AddUpdateGetPlant, Plan
 
         return powerPlantRepository.save(plant);
     }
+
 }
