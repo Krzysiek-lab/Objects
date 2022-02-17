@@ -77,7 +77,7 @@ class ServiceTest {
         powerPlant.setName("Elektrownia");
         powerPlant.setEvents(list);
         testEntityManager.persist(powerPlant);
-        Assertions.assertThat(powerPlantRepository.findAll()).hasSize(2).contains(powerPlant);
+        Assertions.assertThat(powerPlantRepository.findAll()).hasSize(1).contains(powerPlant);
     }
 
 
@@ -90,6 +90,6 @@ class ServiceTest {
         event.setEndDate(LocalDate.of(2022, 2, 13));
         testEntityManager.clear();
         testEntityManager.persist(event);
-        Assertions.assertThat(eventRepository.findAll()).hasSize(5).contains(event);
+        Assertions.assertThat(eventRepository.findAll()).hasSize(1).contains(event);
     }
 }
