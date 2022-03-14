@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Main page</h1>
+
+    <form action="#" th:action="@{main}" th:object="${choice}" method="POST">
+        <div>
+            <label class="control-label">Options</label>
+            <select th:field="*{choice}">
+                <option th:each="i : ${T(ZadanieRekrutacyjne.ZadanieRekrutacyjne.Enum.Options).values()}"
+                        th:value="${i}"
+                        th:text="${i}"></option>
+            </select>
+        </div>
+    </form>
+    <!--    ////////////-->
+    <div>
+        <button type="button">Get tables</button>
+    </div>
+
+    <div id="demo">
+        <h3>Click button to get result of queries</h3>
+    </div>
+    <!--    ////////////-->
+    <hr>
+    <br>
+    <a th:href="@{savePowerPlant}" class="btn btn-primary">Back to add form</a>
+    <br>
+    <br>
+    <a th:href="@{powerPlants}" class="btn btn-primary">Back to list of all</a>
+    <br>
+    <br>
+    <a th:href="@{main}" class="btn btn-primary">Back to main page</a>
+    <br>
+</div>
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        var choice = $('#choice').val();
+
+        $.ajax({
+            url: 'Site',
+            method: 'POST',
+            data: {given: choice}
+        })
+        .done(function(resultHtml) {
+            console.log('success');
+            $('#demo').html(resultHtml);
+          })
+        .success(function(resultHtml){
+
+        })
+        .fail(function(error){
+            console.log('');
+        });
+    });
+});
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

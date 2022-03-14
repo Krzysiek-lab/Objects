@@ -19,6 +19,8 @@
         <div th:if="${#fields.hasErrors('power')}" th:errors="*{power}">Invalid power</div>
         <input type="text" th:field="*{power}" placeholder="power" class="form-control mb-4 col-4">
 
+        <div th:if="${#fields.hasErrors('place')}" th:errors="*{place}">Invalid place</div>
+        <input type="text" th:field="*{place}" placeholder="place" class="form-control mb-4 col-4">
 
         <button type="submit" class="btn btn-info col-2">Save</button>
     </form>

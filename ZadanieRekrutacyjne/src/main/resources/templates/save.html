@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>New Student</title>
+    <title>New Plant</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
 </head>
@@ -18,6 +18,9 @@
 
         <div th:if="${#fields.hasErrors('power')}" th:errors="*{power}">Invalid power</div>
         <input type="text" th:field="*{power}" placeholder="power" class="form-control mb-4 col-4">
+
+        <div th:if="${#fields.hasErrors('place')}" th:errors="*{place}">Invalid place</div>
+        <input type="text" th:field="*{place}" placeholder="place" class="form-control mb-4 col-4">
 
         <button type="submit" class="btn btn-info col-2">Save</button>
     </form>

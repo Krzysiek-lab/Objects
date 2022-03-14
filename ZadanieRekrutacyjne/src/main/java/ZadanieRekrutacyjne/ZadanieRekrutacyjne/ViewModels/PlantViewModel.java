@@ -1,6 +1,5 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels;
 
-import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Entity.Event;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +9,6 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,5 +26,6 @@ public class PlantViewModel {
     Double power;
 
 
-    List<Event> listOfEventsForPlant = new ArrayList<>();
+    @NotEmpty(message = "place can not be empty")
+    String place;
 }

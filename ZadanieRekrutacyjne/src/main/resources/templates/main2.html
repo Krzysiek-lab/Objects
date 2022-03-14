@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
+</head>
+<body>
+<h3>
+    Status:
+    <th:block th:each="single1: ${status}">
+        <td th:text="${single1}"></td>
+    </th:block>
+</h3>
+<br>
+<br>
+<div id="tab">
+    DISTINCT:
+    <table class="table table-bordered">
+        <tr class="table-striped">
+            <th>Name</th>
+            <th>Power</th>
+            <th>Place</th>
+            <th>Actions</th>
+        </tr>
+        <th:block th:each="single: ${valDistinct}">
+            <tr>
+                <td th:text="${single.name}"></td>
+                <td th:text="${single.power}"></td>
+                <td th:text="${single.place}"></td>
+                <td>
+                    <a th:href="@{/updatePowerPlant/{id}(id=${single.id})}" class="btn btn-primary">Update</a>
+                    <a th:href="@{/delete/powerPlants/{id}(id=${single.id})}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+    <br>
+    <br>
+    DUPLICATE:
+    <table class="table table-bordered">
+        <tr class="table-striped">
+            <th>Name</th>
+            <th>Power</th>
+            <th>Place</th>
+            <th>Actions</th>
+        </tr>
+        <th:block th:each="single: ${valDuplicate}">
+            <tr>
+                <td th:text="${single.name}"></td>
+                <td th:text="${single.power}"></td>
+                <td th:text="${single.place}"></td>
+                <td>
+                    <a th:href="@{~/updatePowerPlant/{id}(id=${single.id})}" class="btn btn-primary">Update</a>
+                    <a th:href="@{~/delete/powerPlants/{id}(id=${single.id})}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<br>
+<hr>
+<br>
+<a th:href="@{~/savePowerPlant}" class="btn btn-primary">Back to add form</a>
+<br>
+<br>
+<a th:href="@{~/powerPlants}" class="btn btn-primary">Back to list of all</a>
+<br>
+<br>
+<a th:href="@{~/main}" class="btn btn-primary">Back to main page</a>
+<br>
+</body>
+</html>

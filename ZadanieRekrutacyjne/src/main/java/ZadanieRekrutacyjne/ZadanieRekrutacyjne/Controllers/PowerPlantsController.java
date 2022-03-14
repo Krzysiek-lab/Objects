@@ -1,18 +1,18 @@
 package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Controllers;
 
-import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.EventRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.PowerPlantRepository;
-import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.EventService;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.PlantService;
-import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.UserService;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.ChoiceViewModel;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.PlantViewModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
@@ -22,13 +22,48 @@ public class PowerPlantsController {
 
 
     private final PowerPlantRepository powerPlantRepository;
-    private final EventRepository eventRepository;
     private final PlantService plantService;
-    private final EventService eventService;
-    private final UserService userService;
 
 
-    @GetMapping("form")
+    @GetMapping("main")
+    public String getMainPage(Model model) {
+        model.addAttribute("choice", new ChoiceViewModel());
+        return "main";
+    }
+
+    @PostMapping("main")
+    public String mainForm(@ModelAttribute("choice") ChoiceViewModel choice) {
+        String val = choice.getChoice();
+        return "redirect:/Site/" + val;
+    }
+
+
+
+    @PostMapping("Site")
+    public String Site(String given, Model model) {
+        if (powerPlantRepository.findAll().size() == 0) {
+            model.addAttribute("status", "database is empty, add entities to see result of queries");
+        } else {
+            switch (given) {
+                case "power":
+                    model.addAttribute("valDuplicate", powerPlantRepository.getDuplicatePowerValues());
+                    model.addAttribute("valDistinct", powerPlantRepository.getDistinctPowerValues());
+                    break;
+                case "name":
+                    model.addAttribute("valDuplicate", powerPlantRepository.getDuplicateNameValues());
+                    model.addAttribute("valDistinct", powerPlantRepository.getDistinctNameValues());
+                    break;
+                case "place":
+                    model.addAttribute("valDuplicate", powerPlantRepository.getDuplicatePlaceValues());
+                    model.addAttribute("valDistinct", powerPlantRepository.getDistinctPlaceValues());
+                    break;
+            }
+        }
+        return "main2";
+    }
+
+
+    @GetMapping("savePowerPlant")
     public String getForm(Model model) {
         model.addAttribute("plant", new PlantViewModel());
         return "save";
@@ -47,7 +82,7 @@ public class PowerPlantsController {
         } else {
             plantService.update(plant);
         }
-        return "redirect:/powerPlants";
+        return "redirect:/main";
     }
 
 
@@ -60,35 +95,18 @@ public class PowerPlantsController {
     }
 
 
-    @ResponseBody
-    @GetMapping("failures/{id}")
-    public long failures(@PathVariable("id") int id) {
-        return eventService.NumberOfFailureEventsForId(id);
-    }
-
-
     @GetMapping("powerPlants")
     public String findAll(Model model) {
         model.addAttribute("plant", powerPlantRepository.findAll(Sort.by(Sort.Direction.ASC, "name")));
-        model.addAttribute("user", userService.getCurrentUser());
         return "allPlants";
     }
 
-    @Secured("ROLE_ADMIN")
-    @GetMapping("powerPlantsIds")
-    public String findAllIds(Model model) {
-        model.addAttribute("plantId", powerPlantRepository.findAll());
-        model.addAttribute("eventId", eventRepository.findAll());
-        return "allPlantsId";
+
+    @GetMapping("powerPlantsByPower/{power}")
+    public String findByPower(@PathVariable("power") Double power, Model model) {
+        model.addAttribute("plantByPower", powerPlantRepository.getByPower(power));
+        return "plantByPower";
     }
-
-
-    @GetMapping("powerPlants/{id}")
-    public String findById(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("plant", powerPlantRepository.getOne(id));
-        return "plant";
-    }
-
 
     @GetMapping("powerPlantsByName/{name}")
     public String findByName(@PathVariable("name") String name, Model model) {
@@ -96,37 +114,17 @@ public class PowerPlantsController {
         return "plantByName";
     }
 
-    @Secured("ROLE_ADMIN")
+    @GetMapping("powerPlantsByPlace/{place}")
+    public String findByPlace(@PathVariable("place") String place, Model model) {
+        model.addAttribute("plantByPlace", powerPlantRepository.getByPlace(place));
+        return "plantByPlace";
+    }
+
     @GetMapping("delete/powerPlants/{id}")
     public String deleteById(@PathVariable(value = "id") Integer id) {
         powerPlantRepository.deleteById(id);
         return "redirect:/powerPlants";
     }
 
-    @Secured("ROLE_ADMIN")
-    @GetMapping("addEventToPlant/{plantId}/{eventId}")
-    public String addEventToPlant(@PathVariable(value = "plantId") Long plantId,
-                                  @PathVariable(value = "eventId")
-                                          Long eventId, Model model) {
-
-        if (powerPlantRepository.findById(Math.toIntExact(plantId)).isPresent()
-                && eventRepository.findById(Math.toIntExact(eventId)).isPresent()) {
-            var pl = powerPlantRepository.getOne(Math.toIntExact(plantId));
-            var ev = eventRepository.getOne(Math.toIntExact(eventId));
-
-
-            ev.setPowerPlant(pl);
-            var eventsForPlant = pl.getEvents();
-            eventsForPlant.add(ev);
-            pl.setEvents(eventsForPlant);
-
-            powerPlantRepository.save(pl);
-        }
-
-        var t = powerPlantRepository.getOne(Math.toIntExact(plantId)).getEvents();
-        model.addAttribute("plant", t);
-
-        return "plant_events";
-    }
 
 }

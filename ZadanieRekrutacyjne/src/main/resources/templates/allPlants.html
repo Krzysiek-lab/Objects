@@ -33,32 +33,28 @@
 
 
 
+
+
+
     </style>
 </head>
 <body>
-Logged user:
-<div th:each="us : ${user}">
-    <b th:text="${us.firstName}"></b>
-    <b th:text="${us.lastName}"></b>
-</div>
 <br>
 <table id="plantEvent" class="table table-bordered">
     <tr class="table-striped">
         <th>Name</th>
         <th>Power</th>
-        <th>Events</th>
+        <th>Place</th>
         <th>Actions</th>
     </tr>
     <th:block th:each="single: ${plant}">
         <tr>
             <td th:text="${single.name}"></td>
             <td th:text="${single.power}"></td>
-            <td th:text="${single.events}"></td>
+            <td th:text="${single.place}"></td>
             <td>
                 <a th:href="@{/updatePowerPlant/{id}(id=${single.id})}" class="btn btn-primary">Update</a>
                 <a th:href="@{/delete/powerPlants/{id}(id=${single.id})}" class="btn btn-danger">Delete</a>
-                <a th:href="@{/failures/{id}(id=${single.id})}" class="btn btn-danger">Failures for this Power
-                    Plant</a>
             </td>
         </tr>
     </th:block>
@@ -69,18 +65,38 @@ Provide name
 <button onclick="myFunction()" class="btn btn-primary">Find by name</button>
 <br>
 <br>
+Provide place
+<br>
+<input id="vall2" type="text" class="form-control col-2"><br>
+<button onclick="myFunction2()" class="btn btn-primary">Find by place</button>
+<br>
+<br>
+Provide power
+<br>
+<input id="vall3" type="text" class="form-control col-2"><br>
+<button onclick="myFunction3()" class="btn btn-primary">Find by power</button>
+<br>
+<br>
 <td>
-    <a th:href="@{form}" class="btn btn-primary">Back to plant form site</a>
-    <a th:href="@{eventForm}" class="btn btn-primary">Back to event form site</a>
-    <a th:href="@{events}" class="btn btn-primary">All events</a>
-    <a th:href="@{powerPlantsIds}" class="btn btn-primary">Plants id's (only for admins)</a>
-    <a th:href="@{logout}" class="btn btn-primary">Logout</a>
+    <a th:href="@{~/savePowerPlant}" class="btn btn-primary">Back to plant form site</a>
 </td>
 <script>
 function myFunction() {
   var intt = document.getElementById("vall").value;
 location.href = 'http://localhost:8080/powerPlantsByName/'+intt;
 }
+
+function myFunction2() {
+  var intt = document.getElementById("vall2").value;
+location.href = 'http://localhost:8080/powerPlantsByPlace/'+intt;
+}
+
+function myFunction3() {
+  var intt = document.getElementById("vall3").value;
+location.href = 'http://localhost:8080/powerPlantsByPower/'+intt;
+}
+
+
 
 
 

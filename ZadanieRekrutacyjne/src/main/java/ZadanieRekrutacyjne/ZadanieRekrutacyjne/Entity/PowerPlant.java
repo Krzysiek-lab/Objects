@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -30,9 +29,8 @@ public class PowerPlant {
     @Column
     public Double power;
 
-    @OneToMany(mappedBy = "powerPlant")
-    @ToString.Exclude
-    private List<Event> events;
+    @Column
+    public String place;
 
     @Override
     public boolean equals(Object o) {
