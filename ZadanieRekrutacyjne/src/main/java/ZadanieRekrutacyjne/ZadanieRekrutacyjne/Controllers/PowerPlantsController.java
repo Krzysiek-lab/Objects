@@ -38,7 +38,6 @@ public class PowerPlantsController {
     }
 
 
-
     @PostMapping("Site")
     public String Site(String given, Model model) {
         if (powerPlantRepository.findAll().size() == 0) {
