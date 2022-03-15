@@ -31,8 +31,7 @@ class ServiceTest {
         powerPlant.setName("Elektrownia");
         powerPlant.setPlace("Polska");
         testEntityManager.persist(powerPlant);
-        List<PowerPlant> PowerPlantEntities = new ArrayList<>();
-        PowerPlantEntities.add((PowerPlant) powerPlantRepository.getByName(powerPlant.getName()));
+        List<PowerPlant> PowerPlantEntities = new ArrayList<>(powerPlantRepository.getByName(powerPlant.getName()));
         Assertions.assertThat(PowerPlantEntities).hasSize(1).contains(powerPlant);
     }
 

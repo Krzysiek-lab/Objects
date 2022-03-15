@@ -2,6 +2,7 @@ package ZadanieRekrutacyjne.ZadanieRekrutacyjne.Controllers;
 
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Repositories.PowerPlantRepository;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.PlantService;
+import ZadanieRekrutacyjne.ZadanieRekrutacyjne.Services.Queries;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.ChoiceViewModel;
 import ZadanieRekrutacyjne.ZadanieRekrutacyjne.ViewModels.PlantViewModel;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class PowerPlantsController {
 
     private final PowerPlantRepository powerPlantRepository;
     private final PlantService plantService;
+    private final Queries queries;
 
 
     @GetMapping("main")
@@ -45,15 +47,15 @@ public class PowerPlantsController {
         } else {
             switch (given) {
                 case "power":
-                    model.addAttribute("valDuplicate", powerPlantRepository.getDuplicatePowerValues());
+                    model.addAttribute("valDuplicate", queries.getDuplicatesPower());
                     model.addAttribute("valDistinct", powerPlantRepository.getDistinctPowerValues());
                     break;
                 case "name":
-                    model.addAttribute("valDuplicate", powerPlantRepository.getDuplicateNameValues());
+                    model.addAttribute("valDuplicate", queries.getDuplicatesName());
                     model.addAttribute("valDistinct", powerPlantRepository.getDistinctNameValues());
                     break;
                 case "place":
-                    model.addAttribute("valDuplicate", powerPlantRepository.getDuplicatePlaceValues());
+                    model.addAttribute("valDuplicate", queries.getDuplicatesPlace());
                     model.addAttribute("valDistinct", powerPlantRepository.getDistinctPlaceValues());
                     break;
             }
